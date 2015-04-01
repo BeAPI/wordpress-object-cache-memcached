@@ -51,10 +51,10 @@ function wp_cache_flush() {
 	return $wp_object_cache->flush();
 }
 
-function wp_cache_get($key, $group = '', $force = false) {
+function wp_cache_get($key, $group = '', $force = false, &$found = null) {
 	global $wp_object_cache;
 
-	return $wp_object_cache->get($key, $group, $force);
+	return $wp_object_cache->get($key, $group, $force, $found );
 }
 
 function wp_cache_init() {
@@ -203,7 +203,8 @@ class WP_Object_Cache {
 		return $ret;
 	}
 
-	function get($id, $group = 'default', $force = false) {
+	function get($id, $group = 'default', $force = false, &$found = null) {
+		$found = true;
 		$key = $this->key($id, $group);
 		$mc =& $this->get_mc($group);
 
@@ -216,8 +217,10 @@ class WP_Object_Cache {
 			$this->cache[$key] = $value = false;
 		} else {
 			$value = $mc->get($key);
-	                if ( NULL === $value )
-                        	$value = false;
+	                if ( NULL === $value ) {
+                    	$value = false;
+                    	$found = false;
+                    }
 			$this->cache[$key] = $value;
 		}
 
