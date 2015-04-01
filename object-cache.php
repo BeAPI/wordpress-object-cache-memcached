@@ -791,9 +791,6 @@ class WP_Object_Cache {
 		echo "<strong>Cache Hits:</strong> {$this->cache_hits}<br />";
 		echo "<strong>Cache Misses:</strong> {$this->cache_misses}<br />";
 		echo "</p>";
-		echo "<p>";
-		echo "Use the <a href='https://wordpress.org/plugins/debug-bar/'>Debug Bar</a> plugin for more details";
-		echo "</p>";
 	}
 
 	/**
